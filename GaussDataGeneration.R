@@ -1,5 +1,5 @@
 
-GaussDataGeneration <- function(K, n, dimension, mix_num = 10, cmean = 0.01, cvar = 1, V = 30){
+GaussDataGeneration <- function(K, n, dimension, mix_num = 10, cmean = 0.5, cvar = 1, V = 5){
   #K: nums of categories
   #n: vector, sample size of each class
   #dimension: nums of variables
@@ -18,7 +18,12 @@ GaussDataGeneration <- function(K, n, dimension, mix_num = 10, cmean = 0.01, cva
   y <- list()
   for (k in 1:K){
     mu0 = numeric(dimension)
-    mu0[k] = cmean
+    if(k <= dimension){
+      mu0[k] = cmean
+    }
+    else{
+      mu0[1] = k*cmean
+    }
     centroids[[k]] = mvrnorm(mix_num, mu = mu0, Sigma = cvar*diag(dimension))
     x[[k]] = t(sapply(1:n[k], function(i){mn = sample(1:mix_num, 1);return(mvrnorm(1, mu=c(centroids[[k]][mn, ]),Sigma = sigma0[[mn]]))}))
     y[[k]] = rep(k, n[k])

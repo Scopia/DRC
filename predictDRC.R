@@ -2,17 +2,16 @@
 predictDRC<-function(model, x_t, y_t, threshold = 0){
   #model: model object
   #x_t: features of test data
-  #y_t: label of test data, lenth same as x_t
-  #threshold: confidence level for classify
+  #y_t: label of test data, length same as x_t
+  #threshold: confidence level for classifying
   result = list()
   K = model$K
   alpha1 = model$alpha
   x = as.matrix(model$x)
   x_t = as.matrix(x_t)
-  y = factor(model$y, levels = c(1, 2))
-  y_t = factor(y_t, levels = c(1, 2))
+  y = model$y
   sigpar = model$sigpar
-  K = model$K
+  threshold = min(model$threshold)
   Gram = kernel_func(x_t, x, sigpar)
   q = nrow(Gram)
   discriminantFunc = matrix(0, nrow = nrow(x_t) , ncol = K-1)

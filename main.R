@@ -14,18 +14,20 @@ source('modelTrain.R')
 source('predictDRC.R')
 source('visulization.R')
 
-K = 2
-n = c(50, 150)
-dimension = 3
-n_f = 10
-sigpar = 0.21
-lambda = 4.01
+K = 2 # number of classes
+n = c(50, 150) # sample size of each class
+# K = 3
+# n = c(50, 50, 150)
+dimension = 3 # dimension of input variable
+n_f = 10 # number of folds of data split
+sigpar = 0.21 # the window width of kernel function
+lambda = 4.01 #Penalty parameter
 
 data = GaussDataGeneration(K, n, dimension = dimension, mix_num = 2)
 #data = DataGeneration(K, n, dimension, c(rt,rt,rt), list(rt = 2, rt1 = 3 , rt2 = 4))
 X = data[,1:dimension]
 Y = data[,dimension+1]
-visulization(data)
+visulization(data) # by using t-SNE
 
 cvlist <- dataPartition(X, Y, n_f = n_f)
 x_p = X[-cvlist[[n_f]],]

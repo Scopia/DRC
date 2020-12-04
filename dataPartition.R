@@ -6,8 +6,8 @@ dataPartition <- function(X, Y, n_f = 5){
   n_total = c(table(Y))
   CVgroup <- function(k,datasize){
     cvlist <- list()
-    n <- rep(1:k,ceiling(datasize/k))[1:datasize]    #将数据分成K份
-    temp <- sample(n,datasize)   #把n打乱
+    n <- rep(1:k,ceiling(datasize/k))[1:datasize]   
+    temp <- sample(n,datasize)   
     x <- 1:k
     dataseq <- 1:datasize
     cvlist <- lapply(x,function(x) dataseq[temp==x])
